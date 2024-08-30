@@ -1,0 +1,27 @@
+### Teste API e-Kontroll - Método Adminstrativo
+
+POST https://app.e-kontroll.com.br/api/v1/metodo/listar_empresas HTTP/1.1
+content-type: application/json
+
+{
+    "api_key": "p2zazIRGQ9mwizXKkmVRBasVVW234DLdKkIpu53Rw8eh6zFpBOLolUWBCZmz",
+    "api_key_empresa": "yQuZX1A45FYa7gohZvmlHHDsUPvjLnGCTxuXMdae4W8T5x05hgWEvQgtUmxf"
+}
+
+### Teste API e-Kontroll - Método Fiscal
+
+POST https://app.e-kontroll.com.br/api/v1/metodo/fiscal_entradas HTTP/1.1
+content-type: application/json
+
+{
+    "api_key": "p2zazIRGQ9mwizXKkmVRBasVVW234DLdKkIpu53Rw8eh6zFpBOLolUWBCZmz",
+    "api_key_cliente": "yQuZX1A45FYa7gohZvmlHHDsUPvjLnGCTxuXMdae4W8T5x05hgWEvQgtUmxf", // api_key_cliente aleatoria.
+    "comp_inicial": "2023-01-01",
+    "comp_final": "2023-01-31",
+}
+
+### Teste API de consulta de CNPJ
+
+GET https://receitaws.com.br/v1/cnpj/13212979000103
+
+###

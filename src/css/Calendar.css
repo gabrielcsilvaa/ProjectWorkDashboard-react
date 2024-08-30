@@ -1,0 +1,97 @@
+/* Estilos do cabeçalho e botões */
+.fc .fc-toolbar {
+  background-color: #271b79; /* Azul */
+  color: white;
+  padding: 10px; /* Adiciona padding para melhorar o espaçamento */
+  
+}
+
+.fc .fc-button {
+  background-color: #FD5201; /* Laranja */
+  border: none; /* Remove bordas */
+  color: white;
+  margin: 0 5px; /* Adiciona margem para espaçamento */
+  padding: 5px 10px; /* Adiciona padding para melhorar o espaçamento */
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: #FD5201; /* Cor ao clicar */
+  border: none; /* Remove bordas */
+}
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
+  border-radius: 5px;
+
+}
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+  border-radius: 5px;
+  margin-right: 5px; /* Ajusta o valor para espaçamento */
+}
+
+.fc .fc-list-event:hover td {
+  background-color: #1d145a; /* Cor de fundo ao passar o mouse */
+}
+
+.fc .fc-event {
+  background-color: #271b79; /* Cor de fundo dos eventos */
+  border-color: #000000;
+  color: white; /* Cor do texto dos eventos */
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adicionar sombra suave */
+  z-index: 5;
+  padding: 5px; /* Adiciona padding para melhorar o espaçamento */
+  border-radius: 5px; /* Adiciona bordas arredondadas */
+}
+
+
+.fc .fc-daygrid-event-dot {
+  border-color: #FD5201; /* Cor do ponto do evento */
+}
+
+/* Estilos dos dias na lista de eventos */
+.fc .fc-list-day-cushion {
+  background-color: orange; /* Cor de fundo dos dias */
+}
+
+.fc .fc-list-day-text, .fc .fc-list-day-side-text {
+  color: #000000; /* Cor do texto dentro do elemento */
+}
+
+/* Ajuste do tamanho dos ícones das setas e cores */
+.fc .fc-prev-button, .fc .fc-next-button {
+  font-size: 1em; 
+  color: #FFFFFF; 
+  margin-right: 8px;
+  background-color: #FD5201; 
+  border: none; 
+  padding: 5px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fc .fc-icon {
+  font-size: 1em; 
+  color: #FFFFFF; 
+}
+
+.fc .fc-scroller {
+  overflow-x: hidden;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+  margin: 0px;
+}
+
+.fc .fc-daygrid-day-top {
+  height: 8px;
+}
+
+.fc .fc-col-header-cell {
+  background: #271b79;
+}
+/* Modo claro */
+.fc .fc-col-header-cell {
+  color: white; /* Define a cor dos dias da semana como branco */
+}
