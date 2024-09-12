@@ -45,38 +45,54 @@ const ClientList: React.FC = () => {
 
   const [filterSeverity, setFilterSeverity] = useState<string | null>(null);
   const [filterActive, setFilterActive] = useState(false);
+  const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
 
-  useEffect(() => { 
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = `${MesSelecionado}${AnoSelecionado}`
+        const data = `${MesSelecionado}${AnoSelecionado}`;
         const response = await consultaEventosPorData(data);
 
-        const organizedData = response.sort((a, b) => {
-          const maxA =
-            a.valor379 !== undefined || a.valor380 !== undefined
-              ? Math.max(parseValue(a.valor379), parseValue(a.valor380))
-              : -Infinity;
-          const maxB =
-            b.valor379 !== undefined || b.valor380 !== undefined
-              ? Math.max(parseValue(b.valor379), parseValue(b.valor380))
-              : -Infinity;
+        if (Array.isArray(response)) {
+          if (response.length === 0) {
+            setData([]);
+            setNoDataMessage('Sem informações');
+          } else {
+            const organizedData = response.sort((a, b) => {
+              const maxA =
+                a.valor379 !== undefined || a.valor380 !== undefined
+                  ? Math.max(parseValue(a.valor379), parseValue(a.valor380))
+                  : -Infinity;
+              const maxB =
+                b.valor379 !== undefined || b.valor380 !== undefined
+                  ? Math.max(parseValue(b.valor379), parseValue(b.valor380))
+                  : -Infinity;
 
-          if (maxA === -Infinity && maxB !== -Infinity) return 1;
-          if (maxB === -Infinity && maxA !== -Infinity) return -1;
+              if (maxA === -Infinity && maxB !== -Infinity) return 1;
+              if (maxB === -Infinity && maxA !== -Infinity) return -1;
 
-          if (maxA === Infinity) return 1;
-          if (maxB === Infinity) return -1;
+              if (maxA === Infinity) return 1;
+              if (maxB === Infinity) return -1;
 
-          // Ordem decrescente
-          return maxB - maxA;
-        });
+              // Ordem decrescente
+              return maxB - maxA;
+            });
 
-        setData(organizedData);
-        setOriginalData(organizedData);
-        setLoading(false);
+            setData(organizedData);
+            setOriginalData(organizedData);
+            setNoDataMessage(null);
+          }
+        } else {
+          console.error('Erro inesperado', response);
+          setData([]);
+          setNoDataMessage('Sem informações para este mês / ano');
+        }
       } catch (error) {
-        console.error("Erro ao buscar dados da API", error);
+        console.error('Erro ao buscar dados da API', error);
+        setData([]);
+        setNoDataMessage('Sem informações');
+      } finally {
         setLoading(false);
       }
     };
@@ -86,13 +102,11 @@ const ClientList: React.FC = () => {
 
 
   useEffect(() => {
-    // Definir o mês e ano inicial baseado na data atual
     const hoje = new Date();
     const anoAtual = getYear(hoje);
     const dataPassada = subMonths(hoje, 1);
     const nomeMesPassado = format(dataPassada, "MMMM").toLowerCase();
 
-    // Definir o mês e ano selecionado para o mês passado
     setMesSelecionado(nomeMesPassado);
     setAnoSelecionado(anoAtual.toString());
   }, []);
@@ -332,7 +346,7 @@ const ClientList: React.FC = () => {
                 onChange={selecionarMes}
                 className="border-borderFiltros rounded p-1 dark:bg-corFiltros dark:text-white"
               >
-                <option value="january">Janeiro</option>                                              
+                <option value="january">Janeiro</option>
                 <option value="february">Fevereiro</option>
                 <option value="march">Março</option>
                 <option value="april">Abril</option>
@@ -401,7 +415,7 @@ const ClientList: React.FC = () => {
                   className="cursor-pointer border px-4 py-2"
                   onClick={() => handleSort("nome")}
                 >
-                  Nome{" "}
+                  Nome{""}
                   {sortField === "nome" &&
                     (sortDirection === "ASC" ? (
                       <IoArrowUpOutline className="ml-2 inline-block" />
@@ -486,52 +500,49 @@ const ClientList: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {currentClients.map((cliente) => (
-                <tr
-                  key={cliente.codi_emp}
-                  className="hover:bg-gray-100 dark:hover:bg-black-700"
-                >
-                  <td className="text-black-900 border px-4 py-2 dark:text-white">
-                    {cliente.nome}
-                  </td>
-                  <td className="text-black-900 border px-4 py-2 dark:text-white">
-                    {parseValue(cliente.sobra379) === 0
-                      ? "Sem informações"
-                      : parseValue(cliente.sobra379) < 0
-                        ? `Passou R$ ${parseValue(cliente.sobra379)}`
-                        : `Faltam R$ ${parseValue(cliente.sobra379)}`}
-                  </td>
-                  <td
-                    className={`text-black-900 border px-4 py-2 dark:text-white ${getBackgroundColor(cliente.valor379)}`}
-                  >
-                    {isNaN(parseValue(cliente.valor379)) ||
-                      parseValue(cliente.valor379) === Infinity ||
-                      parseValue(cliente.valor379) === -Infinity
-                      ? "0 %"
-                      : `${parseValue(cliente.valor379)} %`}
-                  </td>
-                  <td className="text-black-900 border px-4 py-2 dark:text-white">
-                    {parseValue(cliente.sobra380) === 0
-                      ? "Sem informações"
-                      : parseValue(cliente.sobra380) < 0
-                        ? `Passou R$ ${parseValue(cliente.sobra380)}`
-                        : `Faltam R$ ${parseValue(cliente.sobra380)}`}
-                  </td>
-                  <td
-                    className={`text-black-900 border px-4 py-2 dark:text-white ${getBackgroundColor(cliente.valor380)}`}
-                  >
-                    {isNaN(parseValue(cliente.valor380)) ||
-                      parseValue(cliente.valor380) === Infinity ||
-                      parseValue(cliente.valor380) === -Infinity
-                      ? "0 %"
-                      : `${parseValue(cliente.valor380)} %`}
+              {currentClients.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="py-2 px-4 border text-center">
+                    {noDataMessage || 'Sem informações'}
                   </td>
                 </tr>
-              ))}
+              ) : (
+                currentClients.map((cliente) => (
+                  <tr
+                    key={cliente.codi_emp}
+                    className="hover:bg-gray-100 dark:hover:bg-black-700"
+                  >
+                    <td className="py-2 px-4 border text-black-900 dark:text-white">{cliente.nome}</td>
+                    <td className="py-2 px-4 border text-black-900 dark:text-white">
+                      {parseValue(cliente.sobra379) === 0
+                        ? 'Sem informações'
+                        : parseValue(cliente.sobra379) < 0
+                          ? `Passou R$ ${parseValue(cliente.sobra379)}`
+                          : `Faltam R$ ${parseValue(cliente.sobra379)}`}
+                    </td>
+                    <td className={`py-2 px-4 border text-black-900 dark:text-white ${getBackgroundColor(cliente.valor379)}`}>
+                      {isNaN(parseValue(cliente.valor379)) || parseValue(cliente.valor379) === Infinity || parseValue(cliente.valor379) === -Infinity
+                        ? '0 %'
+                        : `${parseValue(cliente.valor379)} %`}
+                    </td>
+                    <td className="py-2 px-4 border text-black-900 dark:text-white">
+                      {parseValue(cliente.sobra380) === 0
+                        ? 'Sem informações'
+                        : parseValue(cliente.sobra380) < 0
+                          ? `Passou R$ ${parseValue(cliente.sobra380)}`
+                          : `Faltam R$ ${parseValue(cliente.sobra380)}`}
+                    </td>
+                    <td className={`py-2 px-4 border text-black-900 dark:text-white ${getBackgroundColor(cliente.valor380)}`}>
+                      {isNaN(parseValue(cliente.valor380)) || parseValue(cliente.valor380) === Infinity || parseValue(cliente.valor380) === -Infinity
+                        ? '0 %'
+                        : `${parseValue(cliente.valor380)} %`}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
-
         <div className="flex justify-between items-center mt-4">
           <div className="flex flex-1 justify-center space-x-2">
             <button
