@@ -60,14 +60,15 @@ module.exports = {
         laranjalogo: "#FD5201",
         laranjahover: '#C73D00',// Cor mais escura para hover
         verdecalendario: '#008000',
-        redempresas: '#FFCCCC',
-        yellowempresas: '#FFFFC2',
+        redempresas: '#e06666',
+        yellowempresas: '#ffd966',
         vermelhoescuro: '#FF000033',
-        amareloescuro: '#FFFF0066',
-        greenempresas: '#B3F5E4',
+        amareloescuro: '#FFFF0066', 
+        greenempresas: '#339933',
         verdeescuro: '#00FF004D',
         blackseveridade:'#010e21',
-        loadingcor: '#1e2b37;'
+        corFiltros: '#2d3748',
+        borderFiltros: '#4a5568'
       },
       fontSize: {
         "title-xxl": ["44px", "55px"],

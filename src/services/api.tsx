@@ -112,6 +112,23 @@ const consultaEventos = async () => {
     return null;
   }   
 }
+const consultaEventosPorData = async (mes) => {
+  const url = `http://192.168.25.83:3000/eventos/consulta?mes=${mes}`; 
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data)
+    return data;
+  } catch (error) {
+    console.error('Erro ao consultar', error);
+    return null;
+  }   
+}
 consultaEventos();
 const processData = async (data) => {
   interface ObjetoData {
@@ -157,4 +174,4 @@ const processData = async (data) => {
   parsedDates.sort((a, b) => a.data.getTime() - b.data.getTime());
   return parsedDates;
 };
-export { listarEmpresas, processData, consultaCalendario, consultaAniversario, consultaEventos, consultaCalendarioSocio, consultaAniversarioSocio };
+export { listarEmpresas, processData, consultaCalendario, consultaAniversario, consultaEventos, consultaEventosPorData, consultaCalendarioSocio, consultaAniversarioSocio };
