@@ -42,11 +42,9 @@ const ClientList: React.FC = () => {
   );
   const [MesSelecionado, setMesSelecionado] = useState<string>(`${nomeMesPassado}`);
   const [AnoSelecionado, setAnoSelecionado] = useState<string>(`${anoAtual}`);
-
   const [filterSeverity, setFilterSeverity] = useState<string | null>(null);
   const [filterActive, setFilterActive] = useState(false);
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -123,7 +121,6 @@ const ClientList: React.FC = () => {
   useEffect(() => {
     console.log(AnoSelecionado);
   }, [AnoSelecionado]);
-
 
   const handleSortNumber = (field: string) => {
     let newSortDirection: string | null = "DESC";

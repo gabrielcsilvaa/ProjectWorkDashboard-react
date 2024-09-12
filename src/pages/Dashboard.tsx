@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listarEmpresas, processData, consultaAniversario, consultaEventos, consultaAniversarioSocio } from "../services/api.jsx"; 
+import { listarEmpresas, processData, consultaAniversario, consultaEventos, consultaAniversarioSocio } from "../services/api.jsx";
 import Card from "../components/Card.js";
 import Card2 from "../components/Card2.js";
 import DefaultLayout from "../layout/DefautLayout.js";
@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
   const [eventos, setEventos] = useState<any[]>([]);
   const [contador, setContador] = useState(0);
   const location = useLocation();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.state && location.state.clientId) {
@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
       // Aqui recebe o ID selecionado na rota /clientes
     }
   }, [location.state]);
-  
+
   const incrementarContador = () => {
     if (contador + 3 < eventos.length) {
       setContador(contador + 1);
@@ -60,8 +60,9 @@ const Dashboard: React.FC = () => {
   ];
   const currentMonthName = monthNames[currentMonth - 1];
   const filteredData = data.filter((item: any) => {
-    if (!item.data_cadastro) { // nao tinha nada definido manha toda fazendo isso aaaaa
-      return false;}
+    if (!item.data_cadastro) { 
+      return false;
+    }
     const [day, month, year] = item.data_cadastro.split('/').map(Number);
     return month === currentMonth && year === currentYear;
   });
@@ -69,7 +70,7 @@ const Dashboard: React.FC = () => {
     .map(client => client.razao_social);
 
   useEffect(() => {
-    const BirthdayData = async () => {  
+    const BirthdayData = async () => {
       try {
         const data = await consultaAniversario();
         console.log(data)
@@ -184,7 +185,7 @@ const Dashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center bg-white">
-        <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"/>
+        <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent" />
       </div>
     );
   }
@@ -230,12 +231,12 @@ const Dashboard: React.FC = () => {
               <button className="mr-2 flex items-center bg-laranjalogo text-white px-3 py-2 rounded-lg shadow hover:bg-laranjahover transition" onClick={DiminuirContador}><ArrowLeftIcon className="h-5 w-5 mr-1" /></button>
               <button className="mr-2 flex items-center bg-laranjalogo text-white px-3 py-2 rounded-lg shadow hover:bg-laranjahover transition" onClick={incrementarContador}><ArrowRightIcon className="h-5 w-5 mr-1" /></button>
               <Link to="/clientes">
-              <button
-                className="mr-2 flex items-center bg-laranjalogo text-white px-3 py-2 rounded-lg shadow hover:bg-laranjahover transition"
-                onClick={() => navigate('/clientes')}
-              >
-              <ListBulletIcon className="h-5 w-5 mr-1" />
-              </button>
+                <button
+                  className="mr-2 flex items-center bg-laranjalogo text-white px-3 py-2 rounded-lg shadow hover:bg-laranjahover transition"
+                  onClick={() => navigate('/clientes')}
+                >
+                  <ListBulletIcon className="h-5 w-5 mr-1" />
+                </button>
               </Link>
             </div>
           </div>
