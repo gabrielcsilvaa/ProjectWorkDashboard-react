@@ -75,7 +75,6 @@ const ClientList: React.FC = () => {
               if (maxA === Infinity) return 1;
               if (maxB === Infinity) return -1;
 
-              // Ordem decrescente
               return maxB - maxA;
             });
 
