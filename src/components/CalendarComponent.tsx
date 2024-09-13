@@ -57,7 +57,7 @@ const CalendarComponent: React.FC<CalendarProps> = () => {
 
 }, []);
 
-const datasTotais = [...data, ...socio] 
+const datasTotais = [...data] 
   const handleEventMount = (arg: { event: any; el: HTMLElement }) => {
     const eventElement = arg.el;
 

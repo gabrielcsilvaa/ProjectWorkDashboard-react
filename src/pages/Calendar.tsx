@@ -4,7 +4,6 @@ import CalendarComponent from '../components/CalendarComponent';
 
 const Calendar: React.FC = () => {
   const [loading, setLoading] = useState(true);
-
   
   useEffect(() => {
     setTimeout(() => {
@@ -22,8 +21,8 @@ const Calendar: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className="container mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-2 mt-2">Calendário</h1>
+      <div className="container mx-auto px-4 -mt-12"> 
+        <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">Calendário</h1>
 
         <div className="bg-white px-10 py-3 text-black-2 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white">
           <CalendarComponent />
